@@ -23,8 +23,19 @@ jobs:
       packages: write
 
     steps:
-      - name: Checkout
+      - name: Install poetry
+        run: |
+          sudo apt install -y pipx
+          pipx ensurepath
+          pipx install poetry
+          pipx inject poetry poetry-plugin-export
+
+      - name: Checkout repository
         uses: actions/checkout@v4
+
+      - name: Create requirements.txt
+        run: |
+          poetry export -f requirements.txt --without-hashes --output requirements.txt
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
