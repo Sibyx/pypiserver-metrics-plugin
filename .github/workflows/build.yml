@@ -23,14 +23,13 @@ jobs:
       packages: write
 
     steps:
-      - name: Install poetry
-        run: |
-          sudo apt install -y pipx
-          pipx install poetry
-          pipx inject poetry poetry-plugin-export
-
       - name: Checkout repository
         uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
 
       - name: Create requirements.txt
         run: |
@@ -59,11 +58,11 @@ jobs:
             type=semver,pattern={{version}}
             type=semver,pattern={{major}}.{{minor}}
             type=semver,pattern={{major}}
-            # Latest tag (on main and tags)
+            # Latest tag (on master and tags)
             type=raw,value=latest,enable={{is_default_branch}}
             type=raw,value=latest,enable=${{ startsWith(github.ref, 'refs/tags/v') }}
-            # Edge tag (on main)
-            type=edge,branch=main
+            # Edge tag (on master)
+            type=edge,branch=master
             # Schedule tag (weekly rebuilds)
             type=schedule,pattern={{date 'YYYYMMDD'}}
 
