@@ -1,0 +1,70 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "pypiserver-metrics-plugin"
+version = "0.1.0"
+description = "Prometheus metrics plugin for pypiserver"
+readme = "README.md"
+requires-python = ">=3.9"
+license = {text = "MIT"}
+authors = [
+    {name = "Jakub Dubec", email = "jakub.dubec@gmail.com"}
+]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "Intended Audience :: System Administrators",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Programming Language :: Python :: 3.14",
+    "Topic :: System :: Systems Administration",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+]
+
+dependencies = [
+    "pypiserver>=2.0.0",
+    "prometheus-client>=0.14.0",
+    "legacy-cgi; python_version >= '3.13'",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.0",
+    "pytest-cov",
+    "black",
+]
+
+[project.urls]
+Homepage = "https://github.com/yourusername/pypiserver-metrics-plugin"
+Documentation = "https://github.com/yourusername/pypiserver-metrics-plugin#readme"
+Repository = "https://github.com/yourusername/pypiserver-metrics-plugin"
+Issues = "https://github.com/yourusername/pypiserver-metrics-plugin/issues"
+
+# Entry points for plugin discovery
+# Note: pypiserver's plugin system (via 'pypiserver.plugin') is not yet implemented
+# For now, users manually install the plugin via app.install(MetricsPlugin())
+[project.entry-points."pypiserver.plugin"]
+metrics = "pypiserver_metrics_plugin:MetricsPlugin"
+
+[tool.setuptools]
+packages = ["pypiserver_metrics_plugin"]
+
+[tool.setuptools.package-data]
+pypiserver_metrics_plugin = ["py.typed"]
+
+[tool.black]
+line-length = 88
+target-version = ['py312', 'py313', 'py314']
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = "test_*.py"
+python_classes = "Test*"
+python_functions = "test_*"

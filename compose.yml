@@ -1,0 +1,13 @@
+services:
+  pypiserver:
+    build: .
+    image: pypiserver-metrics:latest
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./packages:/data/packages
+    environment:
+      - PACKAGES_DIR=/data/packages
+      - FALLBACK_URL=https://pypi.org/simple
+      - METRICS_ENDPOINT=/metrics
+    restart: unless-stopped
