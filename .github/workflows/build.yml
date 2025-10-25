@@ -75,7 +75,7 @@ jobs:
       - name: Get pypiserver version
         id: pypiserver
         run: |
-          PYPI_VERSION=$(grep -oP 'pypiserver>=\K[0-9.]+' requirements.txt)
+          PYPI_VERSION=$(grep -oP 'pypiserver==\K[0-9.]+' requirements.txt)
           echo "version=$PYPI_VERSION" >> $GITHUB_OUTPUT
 
       - name: Build and push
